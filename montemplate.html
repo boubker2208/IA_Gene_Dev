@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notre Service-Après-Vente</title>
+    <style>
+        /* Style de la colonne de gauche */
+        .left-column {
+            background-color: rgb(10, 86, 252); /* Couleur légèrement dégradée */
+            height: 100%; /* Hauteur de 100% de la fenêtre */
+            width: 200px; /* Largeur de 200 pixels */
+            position: fixed; /* Position fixe */
+            top: 0; /* En haut de la fenêtre */
+            left: 0; /* Sur le côté gauche */
+            z-index: -1; /* Placer en dessous du contenu principal */
+        }
+
+        /* Style du texte */
+        body {
+            font-family: 'Baskerville', serif; /* Police Baskerville */
+            margin: 20px 20px 20px 220px; /* Ajout de marges avec un espace plus important à gauche */
+        }
+
+        h1 {
+            text-align: center; /* Centrer le titre */
+            font-size: 28px; /* Taille du titre */
+            margin-bottom: 40px; /* Espacement plus important entre le titre et le formulaire */
+        }
+
+        /* Style du formulaire */
+        form {
+            max-width: 400px; /* Largeur maximale du formulaire */
+            margin: 0 auto; /* Centrer le formulaire */
+        }
+
+        /* Style des champs de saisie */
+        label {
+            font-weight: bold; /* Texte en gras */
+        }
+
+        input[type="text"],
+        textarea {
+            width: calc(100% - 20px); /* Prendre toute la largeur disponible avec un espace de 20px */
+            padding: 8px; /* Ajout de rembourrage */
+            margin-top: 5px; /* Espacement en haut */
+            margin-bottom: 10px; /* Espacement en bas */
+            border: 1px solid #ccc; /* Bordure grise */
+            border-radius: 4px; /* Coins arrondis */
+            box-sizing: border-box; /* Inclure la bordure et le padding dans la taille totale */
+        }
+
+        /* Style du bouton de soumission */
+        button[type="submit"] {
+            background: linear-gradient(rgb(10, 86, 252), rgb(67, 171, 151)); /* Dégradé de couleur */
+            color: white; /* Couleur du texte blanche */
+            padding: 10px 20px; /* Rembourrage du bouton */
+            border: none; /* Pas de bordure */
+            border-radius: 4px; /* Coins arrondis */
+            cursor: pointer; /* Curseur de pointeur au survol */
+            float: right; /* Aligner à droite */
+        }
+
+        /* Changement de couleur du bouton au survol */
+        button[type="submit"]:hover {
+            background: linear-gradient(rgb(67, 171, 151), rgb(10, 86, 252)); /* Dégradé de couleur inversé */
+        }
+    </style>
+</head>
+<body>
+    <!-- Colonne de couleur à gauche -->
+    <div class="left-column"></div>
+
+    <h1>Notre Service-Après-Vente</h1>
+    <form action="/poser_question" method="post">
+        <label for="question">Votre question :</label><br>
+        <input type="text" id="question" name="question"><br><br>
+        <label for="reponse">Notre réponse :</label><br>
+        <textarea id="reponse" name="reponse" rows="4" cols="50" readonly></textarea><br><br>
+        <button type="submit">Valider</button>
+    </form>
+
+    <!-- Script JavaScript pour mettre à jour la réponse -->
+    <script>
+        // Fonction pour envoyer une requête XHR au serveur Flask pour obtenir la réponse
+        function poserQuestion() {
+            var question = document.getElementById('question').value;
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/poser_question', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                    var reponse = xhr.responseText;
+                    document.getElementById('reponse').value = reponse;
+                }
+            };
+            xhr.send('question=' + encodeURIComponent(question));
+        }
+
+        // Appeler la fonction poserQuestion() lorsque le formulaire est soumis
+        document.querySelector('form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            poserQuestion();
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
